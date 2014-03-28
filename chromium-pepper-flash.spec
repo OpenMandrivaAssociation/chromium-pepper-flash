@@ -7,7 +7,7 @@ Name:           chromium-pepper-flash
 Url:            http://www.google.com/chrome
 Summary:        Chromium Flash player plugin
 Version:        12.0.0.77
-Release:        0.2
+Release:        0.3
 License:        Free
 Group:          Networking/WWW
 Source0:        https://dl.google.com/linux/direct/google-chrome-stable_current_i386.rpm
@@ -41,24 +41,6 @@ rpm2cpio %{SOURCE0} | cpio -idmv
 %ifarch x86_64
 rpm2cpio %{SOURCE1} | cpio -idmv
 %endif
-
-%post
-CHROMIUM_CONFIG='/etc/chromium/default'
-# add ppapi flashplayer path to chromium config file
-if [[ $(cat "$CHROMIUM_CONFIG") != *ppapi*path* ]]; then
-    sed -i '/CHROMIUM_FLAGS/s|"$| --ppapi-flash-path=/usr/%{_libdir}/chromium/PepperFlash/libpepflashplayer.so"|' "$CHROMIUM_CONFIG"
-  else
-    : # do nothing
-fi
-
-%postun
-CHROMIUM_CONFIG='/etc/chromium/default'
-# remove ppapi flashplayer path from chromiun config file
-if [ -f "$CHROMIUM_CONFIG" ]; then
-    sed -i "s| --ppapi-flash-path=/usr/%{_libdir}/chromium/PepperFlash/libpepflashplayer.so||" "$CHROMIUM_CONFIG"
-  else
-    : # do nothing
-fi
 
 %install
 mkdir -p %{buildroot}%{_libdir}/chromium/PepperFlash/
