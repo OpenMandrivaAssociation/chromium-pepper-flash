@@ -7,11 +7,12 @@ Name:           chromium-pepper-flash
 Url:            http://www.google.com/chrome
 Summary:        Chromium Flash player plugin
 Version:        12.0.0.77
-Release:        0.1
+Release:        0.2
 License:        Free
 Group:          Networking/WWW
 Source0:        https://dl.google.com/linux/direct/google-chrome-stable_current_i386.rpm
 Source1:        https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
+Source2:	default.config
 # Use x86/x86_64 pre-built libs
 ExclusiveArch:  %{ix86} x86_64
 Requires:       chromium-browser
@@ -30,6 +31,8 @@ Official PDF viewer plugin for Google's Open Source browser Chromium.
 
 %prep
 %setup -c -T
+cp %{SOURCE2} default
+sed -i 's/FLASH_VERSION=/FLASH_VERSION=%{version}/g' default
 
 %build
 %ifarch i586
@@ -38,7 +41,6 @@ rpm2cpio %{SOURCE0} | cpio -idmv
 %ifarch x86_64
 rpm2cpio %{SOURCE1} | cpio -idmv
 %endif
-
 
 %post
 CHROMIUM_CONFIG='/etc/chromium/default'
@@ -62,9 +64,12 @@ fi
 mkdir -p %{buildroot}%{_libdir}/chromium/PepperFlash/
 install -m644 opt/google/chrome/PepperFlash/* %{buildroot}%{_libdir}/chromium/PepperFlash/ 
 install -m755 opt/google/chrome/libpdf.so %{buildroot}%{_libdir}/chromium/
+mkdir -p %{buildroot}%{_sysconfdir}/chromium/
+install -m644 default %{buildroot}%{_sysconfdir}/chromium/default
 
 %files
 %dir %{_libdir}/chromium/
+%{_sysconfdir}/chromium/default
 %{_libdir}/chromium/PepperFlash/
 
 %files -n chromium-pdf-plugin
