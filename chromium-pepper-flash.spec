@@ -6,16 +6,15 @@
 Name:           chromium-pepper-flash
 Url:            http://www.google.com/chrome
 Summary:        Chromium Flash player plugin
-Version:        12.0.0.77
-Release:        0.5
+Version:        16.0.0.235
+Release:        1
 License:        Free
 Group:          Networking/WWW
 Source0:        https://dl.google.com/linux/direct/google-chrome-stable_current_i386.rpm
 Source1:        https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
-Source2:	https://abf.io/openmandriva/non-free/chromium-pepper-flash-12.0.0.77-0.3-omv2014.1.armv7hl.rpm
 Source3:	default.config
 # Use x86/x86_64 pre-built libs
-ExclusiveArch:  %{ix86} x86_64 %arm
+ExclusiveArch:  %{ix86} x86_64
 Requires:       chromium-browser
 
 %description
@@ -42,9 +41,7 @@ rpm2cpio %{SOURCE0} | cpio -idmv
 %ifarch x86_64
 rpm2cpio %{SOURCE1} | cpio -idmv
 %endif
-%ifarch %arm
-rpm2cpio %{SOURCE2} | cpio -idmv
-%endif
+
 
 %install
 mkdir -p %{buildroot}%{_libdir}/chromium/PepperFlash/
