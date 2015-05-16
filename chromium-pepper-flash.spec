@@ -6,7 +6,7 @@
 Name:           chromium-pepper-flash
 Url:            http://www.google.com/chrome
 Summary:        Chromium Flash player plugin
-Version:        16.0.0.305
+Version:        17.0.0.188
 Release:        1
 License:        Free
 Group:          Networking/WWW
@@ -19,15 +19,6 @@ Requires:       chromium-browser
 
 %description
 Pepper API based Adobe Flash plugin for Google's Open Source browser Chromium.
-
-%package -n chromium-pdf-plugin
-Summary:        Chromium PDF viewer plugin
-License:        Non-OSS
-Group:          Networking/WWW
-Requires:       chromium-browser
-
-%description -n chromium-pdf-plugin
-Official PDF viewer plugin for Google's Open Source browser Chromium.
 
 %prep
 %setup -c -T
@@ -46,7 +37,6 @@ rpm2cpio %{SOURCE1} | cpio -idmv
 %install
 mkdir -p %{buildroot}%{_libdir}/chromium/PepperFlash/
 install -m644 opt/google/chrome/PepperFlash/* %{buildroot}%{_libdir}/chromium/PepperFlash/ 
-install -m755 opt/google/chrome/libpdf.so %{buildroot}%{_libdir}/chromium/
 mkdir -p %{buildroot}%{_sysconfdir}/chromium/
 install -m644 default %{buildroot}%{_sysconfdir}/chromium/default
 
@@ -54,6 +44,3 @@ install -m644 default %{buildroot}%{_sysconfdir}/chromium/default
 %dir %{_libdir}/chromium/
 %{_sysconfdir}/chromium/default
 %{_libdir}/chromium/PepperFlash/
-
-%files -n chromium-pdf-plugin
-%{_libdir}/chromium/libpdf.so
