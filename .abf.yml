@@ -1,4 +1,4 @@
 sources:
   chromium-pepper-flash-12.0.0.77-0.3-omv2014.1.armv7hl.rpm: f8fc5fe28c843567c8562ee1ffc9ca3eb0124882
-  google-chrome-stable_current_i386.rpm: a480c38894c82ba1c4252add499a154514f058c8
-  google-chrome-stable_current_x86_64.rpm: a0dba4fda0980b6c35e733dcd21564b5018346c0
+  google-chrome-stable_current_i386.rpm: 32b6dd40071d269697f7bf51eba1eca5c4f80ea2
+  google-chrome-stable_current_x86_64.rpm: bd050a424a03f7ac2c376904f72e552c59cac9c0
