@@ -35,7 +35,7 @@ rpm2cpio %{SOURCE1} | cpio -idmv
 %endif
 
 # check version matches
-RPM_VER=`cat opt/google/chrome/PepperFlash/manifest.json | python -c 'import sys,json; print json.load(sys.stdin)["version"]'`
+RPM_VER=`cat opt/google/chrome/PepperFlash/manifest.json | python -c 'import sys,json; print(json.load(sys.stdin)["version"])'`
 
 if [ "$RPM_VER" != "%{version}" ]; then
   echo "VERSION MISMATCH, Rpm version $RPM_VER this package %{version}"
