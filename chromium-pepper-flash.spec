@@ -6,7 +6,7 @@
 Name:           chromium-pepper-flash
 Url:            http://www.google.com/chrome
 Summary:        Chromium Flash player plugin
-Version:        18.0.0.160
+Version:        18.0.0.194
 Release:        1
 License:        Free
 Group:          Networking/WWW
@@ -16,6 +16,7 @@ Source3:	default.config
 # Use x86/x86_64 pre-built libs
 ExclusiveArch:  %{ix86} x86_64
 Requires:       chromium-browser
+BuildRequires:	python
 
 %description
 Pepper API based Adobe Flash plugin for Google's Open Source browser Chromium.
@@ -32,6 +33,14 @@ rpm2cpio %{SOURCE0} | cpio -idmv
 %ifarch x86_64
 rpm2cpio %{SOURCE1} | cpio -idmv
 %endif
+
+# check version matches
+RPM_VER=`cat opt/google/chrome/PepperFlash/manifest.json | python -c 'import sys,json; print json.load(sys.stdin)["version"]'`
+
+if [ "$RPM_VER" != "%{version}" ]; then
+  echo "VERSION MISMATCH, Rpm version $RPM_VER this package %{version}"
+  exit 1
+fi
 
 
 %install
