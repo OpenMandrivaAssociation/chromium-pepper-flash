@@ -6,7 +6,7 @@
 Name:           chromium-pepper-flash
 Url:            http://www.google.com/chrome
 Summary:        Chromium Flash player plugin
-Version:        19.0.0.245
+Version:        20.0.0.228
 Release:        1
 License:        Free
 Group:          Networking/WWW
