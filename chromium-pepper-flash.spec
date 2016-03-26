@@ -3,10 +3,17 @@
 # Thanks to jhaygood for most of the icu patch
 %define	debug_package %nil
 
+# 32-bit version is discontinued
+%ifarch %ix86
+%define ver 20.0.0.306
+%else
+%define ver 21.0.0.197
+%endif
+
 Name:           chromium-pepper-flash
 Url:            http://www.google.com/chrome
 Summary:        Chromium Flash player plugin
-Version:        20.0.0.306
+Version:        %ver
 Release:        1
 License:        Free
 Group:          Networking/WWW
