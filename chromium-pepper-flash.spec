@@ -7,7 +7,7 @@
 %ifarch %ix86
 %define ver 20.0.0.306
 %else
-%define ver 22.0.0.209
+%define ver 23.0.0.162
 %endif
 
 Name:           chromium-pepper-flash
