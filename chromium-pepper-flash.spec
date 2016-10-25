@@ -3,22 +3,15 @@
 # Thanks to jhaygood for most of the icu patch
 %define	debug_package %nil
 
-# 32-bit version is discontinued
-%ifarch %ix86
-%define ver 20.0.0.306
-%else
-%define ver 23.0.0.162
-%endif
-
 Name:           chromium-pepper-flash
 Url:            http://www.google.com/chrome
 Summary:        Chromium Flash player plugin
-Version:        %ver
+Version:        23.0.0.185
 Release:        1
 License:        Free
 Group:          Networking/WWW
-Source0:        https://dl.google.com/linux/direct/google-chrome-stable_current_i386.rpm
-Source1:        https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
+Source0:        https://fpdownload.adobe.com/pub/flashplayer/pdc/%{version}/flash_player_ppapi_linux.i386.tar.gz
+Source1:        https://fpdownload.adobe.com/pub/flashplayer/pdc/%{version}/flash_player_ppapi_linux.x86_64.tar.gz
 Source3:	default.config
 # Use x86/x86_64 pre-built libs
 ExclusiveArch:  %{ix86} x86_64
@@ -35,14 +28,14 @@ sed -i 's/FLASH_VERSION=/FLASH_VERSION=%{version}/g' default
 
 %build
 %ifarch i586
-rpm2cpio %{SOURCE0} | cpio -idmv
+tar xvf %{SOURCE0} 
 %endif
 %ifarch x86_64
-rpm2cpio %{SOURCE1} | cpio -idmv
+tar xvf %{SOURCE1}
 %endif
 
 # check version matches
-RPM_VER=`cat opt/google/chrome/PepperFlash/manifest.json | python -c 'import sys,json; print(json.load(sys.stdin)["version"])'`
+RPM_VER=`cat manifest.json | python -c 'import sys,json; print(json.load(sys.stdin)["version"])'`
 
 if [ "$RPM_VER" != "%{version}" ]; then
   echo "VERSION MISMATCH, Rpm version $RPM_VER this package %{version}"
@@ -52,7 +45,7 @@ fi
 
 %install
 mkdir -p %{buildroot}%{_libdir}/chromium/PepperFlash/
-install -m644 opt/google/chrome/PepperFlash/* %{buildroot}%{_libdir}/chromium/PepperFlash/ 
+install -m644 *.{so,json} %{buildroot}%{_libdir}/chromium/PepperFlash/ 
 mkdir -p %{buildroot}%{_sysconfdir}/chromium/
 install -m644 default %{buildroot}%{_sysconfdir}/chromium/default
 
