@@ -3,10 +3,15 @@
 # Thanks to jhaygood for most of the icu patch
 %define	debug_package %nil
 
+%if %mdvver <= 3000000
+%define x86_64 x86_64
+%endif
+
+
 Name:           chromium-pepper-flash
 Url:            http://www.google.com/chrome
 Summary:        Chromium Flash player plugin
-Version:        31.0.0.108
+Version:        31.0.0.122
 Release:        1
 License:        Free
 Group:          Networking/WWW
@@ -14,7 +19,7 @@ Source0:        https://fpdownload.adobe.com/pub/flashplayer/pdc/%{version}/flas
 Source1:        https://fpdownload.adobe.com/pub/flashplayer/pdc/%{version}/flash_player_ppapi_linux.x86_64.tar.gz
 Source3:	default.config
 # Use x86/x86_64 pre-built libs
-ExclusiveArch:  %{ix86} x86_64
+ExclusiveArch:  %{ix86} %{x86_64}
 Requires:       chromium-browser
 BuildRequires:	python
 
@@ -27,10 +32,10 @@ cp %{SOURCE3} default
 sed -i 's/FLASH_VERSION=/FLASH_VERSION=%{version}/g' default
 
 %build
-%ifarch i586
+%ifarch %{ix86}
 tar xvf %{SOURCE0} 
 %endif
-%ifarch x86_64
+%ifarch %{x86_64} 
 tar xvf %{SOURCE1}
 %endif
 
